@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="google-adsense-account" content="ca-pub-8052415161271246">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Durga Puja Grand Dhamaka</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #FF6B6B, #F9D03F);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+            overflow: hidden;
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            width: 100%;
+            max-width: 320px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .game-card {
+            width: 100%;
+            padding-bottom: 125%; /* 4:5 aspect ratio (100% / 4 * 5 = 125%) */
+            position: relative;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+        
+        .card-inner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .game-card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 0.5rem;
+        }
+
+        .card-front {
+            background: linear-gradient(135deg, #FF6B6B, #F9D03F);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            font-size: 1.5rem;
+            color: white;
+            font-weight: 700;
+        }
+
+        .card-back {
+            background-color: #ffffff;
+            color: #1a202c;
+            transform: rotateY(180deg);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
+        }
+        .modal-content {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 1.5rem;
+            text-align: center;
+            animation: fadeIn 0.5s ease-out;
+            max-width: 90vw;
+            width: 450px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 40;
+        }
+        .confetti {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background-color: #f0f0f0;
+            border-radius: 50%;
+            opacity: 0;
+            animation: confetti-fall 3s forwards;
+        }
+
+        @keyframes confetti-fall {
+            0% { transform: translateY(0) rotateZ(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotateZ(720deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center p-4 min-h-screen">
+    <div class="card bg-white rounded-2xl shadow-xl p-8 max-w-lg w-full text-center">
+        <h1 class="text-4xl font-extrabold text-orange-600 mb-2">Durga Puja Grand Dhamaka</h1>
+        <p class="text-base text-gray-500 mb-6">Click on a card to reveal your special prize!</p>
+        <p id="attemptsText" class="text-lg font-bold text-gray-700 mb-6">Attempts Left: 3</p>
+        
+        <div class="card-container">
+            <div class="game-card">
+                <div class="card-inner">
+                    <div class="card-front">?</div>
+                    <div class="card-back">
+                        <p class="font-bold text-2xl text-gray-700">Oops!</p>
+                        <p class="text-sm text-gray-500">Try Again</p>
+                    </div>
+                </div>
+            </div>
+            <div class="game-card">
+                <div class="card-inner">
+                    <div class="card-front">?</div>
+                    <div class="card-back">
+                        <p class="font-bold text-2xl text-gray-700">Oops!</p>
+                        <p class="text-sm text-gray-500">Try Again</p>
+                    </div>
+                </div>
+            </div>
+            <div class="game-card">
+                <div class="card-inner">
+                    <div class="card-front">?</div>
+                    <div class="card-back">
+                        <p class="font-bold text-2xl text-gray-700">Oops!</p>
+                        <p class="text-sm text-gray-500">Try Again</p>
+                    </div>
+                </div>
+            </div>
+            <div class="game-card">
+                <div class="card-inner">
+                    <div class="card-front">?</div>
+                    <div class="card-back">
+                        <p class="font-bold text-2xl text-gray-700">Oops!</p>
+                        <p class="text-sm text-gray-500">Try Again</p>
+                    </div>
+                </div>
+            </div>
+            <div class="game-card">
+                <div class="card-inner">
+                    <div class="card-front">?</div>
+                    <div class="card-back">
+                        <p class="font-bold text-2xl text-gray-700">Oops!</p>
+                        <p class="text-sm text-gray-500">Try Again</p>
+                    </div>
+                </div>
+            </div>
+            <div class="game-card">
+                <div class="card-inner">
+                    <div class="card-front">?</div>
+                    <div class="card-back">
+                        <p class="font-bold text-2xl text-gray-700">Oops!</p>
+                        <p class="text-sm text-gray-500">Try Again</p>
+                    </div>
+                </div>
+            </div>
+            <div class="game-card">
+                <div class="card-inner">
+                    <div class="card-front">?</div>
+                    <div class="card-back">
+                        <p class="font-bold text-2xl text-gray-700">Oops!</p>
+                        <p class="text-sm text-gray-500">Try Again</p>
+                    </div>
+                </div>
+            </div>
+            <div class="game-card">
+                <div class="card-inner">
+                    <div class="card-front">?</div>
+                    <div class="card-back">
+                        <p class="font-bold text-2xl text-gray-700">Oops!</p>
+                        <p class="text-sm text-gray-500">Try Again</p>
+                    </div>
+                </div>
+            </div>
+            <div class="game-card">
+                <div class="card-inner">
+                    <div class="card-front">?</div>
+                    <div class="card-back">
+                        <p class="font-bold text-2xl text-gray-700">Oops!</p>
+                        <p class="text-sm text-gray-500">Try Again</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button id="resetBtn" class="w-full py-4 px-6 text-xl text-white bg-red-500 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105" style="display: none;">
+            Play Again
+        </button>
+
+        <!-- The Modal/Popup -->
+        <div id="resultModal" class="modal-overlay hidden">
+            <div class="modal-content">
+                <h2 id="modalTitle" class="text-3xl font-bold text-gray-800 mb-4"></h2>
+                <p id="modalMessage" class="text-lg text-gray-600 mb-6"></p>
+                <div id="claimInstructions" class="hidden">
+                    <p class="text-sm text-gray-500 mb-4">You must share this page with 5 friends to claim your prize.</p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <button id="shareBtn" class="px-8 py-3 w-full sm:w-auto bg-green-500 text-white rounded-full text-lg font-semibold hover:bg-green-600 transition-colors">
+                            Share on WhatsApp
+                        </button>
+                        <button id="copyLinkBtn" class="px-8 py-3 w-full sm:w-auto bg-gray-200 text-gray-800 rounded-full text-lg font-semibold hover:bg-gray-300 transition-colors">
+                            Copy Link
+                        </button>
+                    </div>
+                    <p id="copyMessage" class="text-sm text-green-600 mt-2 hidden">Link copied to clipboard!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confetti container -->
+        <div id="confettiContainer" class="confetti-container hidden"></div>
+    </div>
+
+    <script>
+        const cards = document.querySelectorAll('.game-card');
+        const modal = document.getElementById('resultModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalMessage = document.getElementById('modalMessage');
+        const claimInstructions = document.getElementById('claimInstructions');
+        const confettiContainer = document.getElementById('confettiContainer');
+        const resetBtn = document.getElementById('resetBtn');
+        const attemptsText = document.getElementById('attemptsText');
+        const shareBtn = document.getElementById('shareBtn');
+        const copyLinkBtn = document.getElementById('copyLinkBtn');
+        const copyMessage = document.getElementById('copyMessage');
+
+        let attemptsLeft = 3;
+        let isGameOver = false;
+        const winningPrize = "iPhone 17";
+        let winningCardIndex = null;
+
+        const updateAttemptsText = () => {
+            attemptsText.textContent = `Attempts Left: ${attemptsLeft}`;
+        };
+
+        const showResult = (isWinner, prize, card) => {
+            modal.style.display = 'flex';
+            if (isWinner) {
+                modalTitle.textContent = "Congratulations!";
+                modalMessage.innerHTML = `
+                    <p class="text-lg text-gray-600 mb-6">You won the <span class="font-bold text-green-600">${prize}</span>!</p>
+                    <img src="https://i.ibb.co/s96zFKFS/iphone17.png" alt="iPhone 17" class="mt-2 mb-4 w-40 h-auto mx-auto">
+                `;
+                claimInstructions.classList.remove('hidden');
+                createConfetti();
+                
+                const cardBack = card.querySelector('.card-back');
+                cardBack.innerHTML = `<h2 class="font-bold text-2xl text-green-600">WIN!</h2>`;
+            } else {
+                modalTitle.textContent = "Almost!";
+                modalMessage.textContent = "You didn't win this time, but you can try again!";
+                claimInstructions.classList.add('hidden');
+            }
+        };
+
+        const createConfetti = () => {
+            confettiContainer.classList.remove('hidden');
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = `${Math.random() * 100}%`;
+                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                confetti.style.animationDelay = `${Math.random() * 0.5}s`;
+                confetti.style.animationDuration = `${2 + Math.random()}s`;
+                confettiContainer.appendChild(confetti);
+            }
+            setTimeout(() => {
+                confettiContainer.classList.add('hidden');
+                confettiContainer.innerHTML = '';
+            }, 3000);
+        };
+        
+        cards.forEach((card, index) => {
+            card.addEventListener('click', () => {
+                if (isGameOver || attemptsLeft <= 0 || card.classList.contains('flipped')) return;
+                
+                card.classList.add('flipped');
+                attemptsLeft--;
+                updateAttemptsText();
+                
+                if (attemptsLeft === 1) {
+                    isGameOver = true;
+                    showResult(true, winningPrize, card);
+                    resetBtn.style.display = 'block';
+                } else {
+                    if (attemptsLeft === 0) {
+                        isGameOver = true;
+                        
+                        modal.style.display = 'flex';
+                        modalTitle.textContent = "Game Over!";
+                        modalMessage.textContent = "You've run out of tries. Better luck next time!";
+                        claimInstructions.classList.add('hidden');
+                        resetBtn.style.display = 'block';
+                    } else {
+                        showResult(false, null, card);
+                    }
+                }
+            });
+        });
+        
+        resetBtn.addEventListener('click', () => {
+            cards.forEach(card => {
+                card.classList.remove('flipped');
+                card.querySelector('.card-back').innerHTML = `<p class="font-bold text-2xl text-gray-700">Oops!</p><p class="text-sm text-gray-500">Try Again</p>`;
+            });
+            attemptsLeft = 3;
+            isGameOver = false;
+            updateAttemptsText();
+            resetBtn.style.display = 'none';
+            modal.style.display = 'none';
+        });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Event listener for Share on WhatsApp button
+        shareBtn.addEventListener('click', () => {
+            const message = encodeURIComponent(`I just won an iPhone 17 in this Durga Puja giveaway! Try your luck here: ${window.location.href}`);
+            const whatsappUrl = `https://wa.me/?text=${message}`;
+            window.open(whatsappUrl, '_blank');
+        });
+
+        // Event listener for Copy Link button
+        copyLinkBtn.addEventListener('click', () => {
+            const url = window.location.href;
+            document.execCommand('copy');
+            
+            copyMessage.classList.remove('hidden');
+            setTimeout(() => {
+                copyMessage.classList.add('hidden');
+            }, 2000);
+        });
+        document.addEventListener('copy', (e) => {
+            e.preventDefault();
+            e.clipboardData.setData('text/plain', window.location.href);
+        });
+    </script>
+</body>
+</html>
